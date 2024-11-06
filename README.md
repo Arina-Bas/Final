@@ -58,6 +58,8 @@ plt.figure(figsize=(16, 14))
 corr_matrix = df_c[columns_for_tests_and_visualisation].corr()
 sb.heatmap(corr_matrix, annot=True, cmap='coolwarm')
 plt.savefig('Тепловая карта.png')
+![image](https://github.com/user-attachments/assets/27a49278-7c9b-464d-a8ba-957e060a969c)
+
 
 ### Проверка нормальности распределения с помощью теста Андерсона
 Проводим тест Андерсона для проверки нормальности распределения для колонок Depth и Width:
@@ -99,4 +101,5 @@ plt.ylabel('Предсказанные значения')
 plt.title('Предсказания Линейной Регрессии')
 plt.legend()
 plt.show()
+
 
