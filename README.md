@@ -1,6 +1,10 @@
-ОТЧЕТ
+### ОТЧЕТ
+### Практический кейс  «Прогнозирование размеров сварного шва при электронно-лучевой сварке тонкостенных конструкций аэрокосмического назначения» 
 
 В данном отчете представлен процесс анализа и моделирования данных, используя библиотеку Pandas для обработки данных и библиотеки Scikit-learn, Keras и XGBoost для построения моделей. 
+
+### Задача: 
+Решить задачу регрессии (одним или несколькими методами)  для предсказания глубины и ширины сварного соединения.
 
 ### Импорт библиотек
 Начинаем с импорта необходимых библиотек:
@@ -21,7 +25,6 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 print(df.info())
 Удаляем дубликаты, если они имеются в данных:
-Python
 df = df.drop_duplicates()
 df_c = df
 df_c.to_csv('cleaned_df_final_work.csv')
@@ -49,7 +52,6 @@ for column in columns_for_tests_and_visualisation:
     plt.title(f'Q-Q график для колонки {column}')
     plt.savefig(f'Q-Q график для колонки {column}.png')
 Также создается тепловая карта для визуализации корреляции между переменными:
-Python
 plt.figure(figsize=(16, 14))
 corr_matrix = df_c[columns_for_tests_and_visualisation].corr()
 sb.heatmap(corr_matrix, annot=True, cmap='coolwarm')
@@ -60,6 +62,7 @@ plt.savefig('Тепловая карта.png')
 ### Проверка нормальности распределения с помощью теста Андерсона
 Проводим тест Андерсона для проверки нормальности распределения для колонок Depth и Width:
 result = st.anderson(df_c['Depth'])
+result = st.anderson(df_c['Width'])
 # Аналогичные действия для колонки Width
 
 ### Построение модели линейной регрессии
@@ -107,6 +110,8 @@ prediction_lr = lr.predict(X_test)
 print('LinearRegression_Width')
 print('MAE', mean_absolute_error(y_test, prediction_lr))
 print('RMSE', np.sqrt(mean_squared_error(y_test, prediction_lr)))
+![image](https://github.com/user-attachments/assets/ff50d0a2-5a61-44f5-b292-3ea7cd5422f2)
+![image](https://github.com/user-attachments/assets/017e24e6-496d-47a0-b400-009a6b7b0bab)
 
 
 ### Оценка модели для DEPTH и WIDTH
@@ -188,6 +193,8 @@ depth_r2 = r2_score(y_depth_test, y_depth_pred)
 y_width_pred = svr_width.predict(X_test)
 width_mse = mean_squared_error(y_width_test, y_width_pred)
 width_r2 = r2_score(y_width_test, y_width_pred)
+![image](https://github.com/user-attachments/assets/e9da1996-a8ed-47e6-9e15-17cd80c64626)
+![image](https://github.com/user-attachments/assets/9be7da4a-5468-4eb1-885f-8ee693a8828b)
 
 ### Оценка модели для DEPTH и WIDTH
 print('SVR results')
@@ -242,7 +249,6 @@ width_r2 = r2_score(y_width_test, y_width_pred)
 Вывод результатов
 print(f'Depth: MSE = {depth_mse}, R² = {depth_r2}')
 print(f'Width: MSE = {width_mse}, R² = {width_r2}')
-
 
 ### Делаем выводы по полученным результатм от нейросети
 DEPTH:  
